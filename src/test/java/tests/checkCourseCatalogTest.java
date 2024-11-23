@@ -2,24 +2,38 @@ package tests;
 
 import base.BaseSettings;
 
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.BasePage;
 import pages.TestingPage;
 
-public class checkCourseCatalog extends BaseSettings {
+
+public class checkCourseCatalogTest extends BaseSettings {
     @Test
-    @DisplayName("Проверка кол-во курсов")
-    public void checktest() {
+    @DisplayName("Проверка: кол-во курсов")
+    public void checkCourseCount() {
         new BasePage()
                 .openURL()
                 .clickBropdownTraining()
                 .clickBropdownTrainingTesting();
         new TestingPage()
-               // .getTotalCoursesCount()
                 .displayTotalCoursesCount();
     }
+
+    @Test
+    @DisplayName("Проверка полей в курсе: Java QA Engineer. Professional")
+    public void checkCourseData() {
+        new BasePage()
+                .openURL()
+                .clickBropdownTraining()
+                .clickBropdownTrainingTesting();
+        new TestingPage()
+                .clickJavaQaEngineerProfessional()
+                .checkCourseData();
+    }
+
+
+
 
 }
 /*

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}: %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.codeborne.selenide" level="OFF" additivity="false"/>
+        <Logger name="FileHelper" level="OFF" additivity="false"/>
+        <Logger name="CloseDriverCommand" level="OFF" additivity="false"/>
+        <Logger name="DisposablesRegistry" level="OFF" additivity="false"/>
+        <Logger name="io.github.bonigarcia.wdm" level="OFF" additivity="false"/>
+
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

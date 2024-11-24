@@ -7,10 +7,9 @@ import org.junit.jupiter.api.Test;
 import pages.BasePage;
 import pages.TestingPage;
 
-
 public class checkCourseCatalogTest extends BaseSettings {
     @Test
-    @DisplayName("Проверка: кол-во курсов")
+    @DisplayName("Проверка количества курсов")
     public void checkCourseCount() {
         new BasePage()
                 .openURL()
@@ -18,6 +17,7 @@ public class checkCourseCatalogTest extends BaseSettings {
                 .clickBropdownTraining()
                 .clickBropdownTrainingTesting();
         new TestingPage()
+                .clickShowMoreButton()
                 .displayTotalCoursesCount();
     }
 

@@ -10,12 +10,17 @@ import static com.codeborne.selenide.Selenide.$x;
 public class TestingPage {
     private ElementActions elementActions = new ElementActions();
 
+    //Все курсы
     private static final ElementsCollection TOTAL_COURSES_COUNT = $$("a.sc-zzdkm7-0");
-
-    private static final SelenideElement JAVA_QA_ENGINEER_PROFESSIONAL =$x("(//a[@href='/lessons/java-qa-pro'])[1]");
+    //Курс - Java QA Engineer. Professional
+    private static final SelenideElement JAVA_QA_ENGINEER_PROFESSIONAL =$x("//div[normalize-space(text())='Java QA Engineer. Professional']");
+    //Поле - Название
     private static final SelenideElement COURSE_NAME =$x("//h1[normalize-space(text())='Java QA Engineer. Professional']");
+    //Поле - Описание
     private static final SelenideElement COURSE_DESCRIPTION =$x("//p[normalize-space(text())='Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности']");
+    //Поле - Длительность
     private static final SelenideElement TRAINING_DURATION =$x("//p[normalize-space(text())='4 месяца']");
+    //Поле - Формат
     private static final SelenideElement TRAINING_FORMAT =$x("//p[normalize-space(text())='Онлайн']");
 
 
@@ -23,7 +28,6 @@ public class TestingPage {
         System.out.println("Количество курсов: "+ TOTAL_COURSES_COUNT.size());
         return this;
     }
-
     public TestingPage clickJavaQaEngineerProfessional() {
         elementActions.doubleClick(JAVA_QA_ENGINEER_PROFESSIONAL, "Курс 'Java QA Engineer. Professional'");
         return this;
@@ -35,16 +39,5 @@ public class TestingPage {
         elementActions.shouldHave(TRAINING_FORMAT,"Онлайн", "Формат обучения 'Онлайн'");
     return this;
     }
-
-
-
-
-//        public void verifyCourseDetails(String name, String description, String duration, String format) {
-//        $x("//h1").shouldHave(text(name));
-//        $x("//div[contains(text(), 'Описание')]").parent().shouldHave(text(description));
-//        $x("//div[contains(text(), 'Длительность')]").parent().shouldHave(text(duration));
-//        $x("//div[contains(text(), 'Формат')]").parent().shouldHave(text(format));
-
-
 
 }

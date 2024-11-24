@@ -1,6 +1,5 @@
 package pages;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import config.AccessesConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +13,14 @@ import static com.codeborne.selenide.Selenide.$x;
 public class BasePage {
     private ElementActions elementActions = new ElementActions();
 
+    //Вкладка - Обучение
     private static final SelenideElement DROPDOWN_TRAINING =$x("//span[normalize-space(text())='Обучение']");
+    //Вкладка - Тестирование
     private static final SelenideElement DROPDOWN_TRAINING_TESTING =$x("//a[normalize-space(text())='Тестирование']");
+    //Вкладка - Календрарь мероприятий
+    private static final SelenideElement EVENTS_CALENDAR =$x("//a[normalize-space(text())='Календарь мероприятий']");
+    //Кнопка - ОК
+    private static final SelenideElement BUTTON_OK =$x("//div[normalize-space(text())='OK']");
 
     public BasePage clickBropdownTraining() {
         elementActions.click(DROPDOWN_TRAINING, "Выпадающий список 'Обучение'");
@@ -25,8 +30,14 @@ public class BasePage {
         elementActions.click(DROPDOWN_TRAINING_TESTING, "Элемент выпадающего списка 'Тестирование'");
         return this;
     }
-
-
+    public BasePage clickEventsCalendar() {
+        elementActions.click(EVENTS_CALENDAR, "Элемент выпадающего списка 'Календарь мероприятий'");
+        return this;
+    }
+    public BasePage clickButtonOk() {
+        elementActions.click(BUTTON_OK, "Кнопка 'ОК'");
+        return this;
+    }
     //Метод открытия URL
     public BasePage openURL() {
         AccessesConfig accessesConfig = ConfigFactory.create(AccessesConfig.class);

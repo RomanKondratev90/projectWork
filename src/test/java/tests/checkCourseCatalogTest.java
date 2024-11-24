@@ -14,6 +14,7 @@ public class checkCourseCatalogTest extends BaseSettings {
     public void checkCourseCount() {
         new BasePage()
                 .openURL()
+                .clickButtonOk()
                 .clickBropdownTraining()
                 .clickBropdownTrainingTesting();
         new TestingPage()
@@ -25,6 +26,7 @@ public class checkCourseCatalogTest extends BaseSettings {
     public void checkCourseData() {
         new BasePage()
                 .openURL()
+                .clickButtonOk()
                 .clickBropdownTraining()
                 .clickBropdownTrainingTesting();
         new TestingPage()
@@ -39,8 +41,8 @@ public class checkCourseCatalogTest extends BaseSettings {
 /*
 1. Посчитать кол-во курсов в разделе тестирование и вывести результат
 2. Перейти в карточку курса и проверить : Название,  Описание,  Длительность обучения, Формат
-3. Валидация дат мероприятий (прогрузить все карточки, получить дату сегодняшнюю Либо больше сегоднешней)
-Проверить что все даты сегодняшнюю Либо больше сегоднешней
+3. Валидация дат мероприятий. Прогрузить все карточки, получить дату актуальную или больше актуальной)
+Проверить, что отображаются даты актуальные, либо больше актуальной
 4. Открыть карточки  предстоящих мероприятий - Открытые вебинары
-Проверить, что все карточки имеют значение - открытый вебинар
+Выбрать открытый вебинар в выпадающем списке и проверить, что все карточки имеют значение - открытый вебинар
 */

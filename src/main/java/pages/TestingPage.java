@@ -13,7 +13,7 @@ public class TestingPage {
     //Все курсы
     private static final ElementsCollection TOTAL_COURSES_COUNT = $$x("//section[@class='sc-o4bnil-0 riKpM']//a");
     //Кнопка - Показать еще
-    private static final SelenideElement SHOW_MORE_BUTTON =$x("//button[@class='sc-mrx253-0 enxKCy sc-prqxfo-0 cXVWAS']");
+    private static final SelenideElement SHOW_MORE_BUTTON =$x("//button[contains(normalize-space(text()), 'Показать еще 1')]");
     //Курс - Java QA Engineer. Professional
     private static final SelenideElement JAVA_QA_ENGINEER_PROFESSIONAL =$x("//div[normalize-space(text())='Java QA Engineer. Professional']");
     //Поле - Название
@@ -26,7 +26,8 @@ public class TestingPage {
     private static final SelenideElement TRAINING_FORMAT =$x("//p[normalize-space(text())='Онлайн']");
 
     public TestingPage clickShowMoreButton() {
-        SHOW_MORE_BUTTON.scrollTo();
+        SHOW_MORE_BUTTON.scrollIntoView("{block: 'center'}");;
+        sleep(3000);
         elementActions.doubleClick(SHOW_MORE_BUTTON.shouldBe(Condition.visible), "Кнопка 'Показать еще'");
         return this;
     }

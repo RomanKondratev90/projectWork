@@ -1,9 +1,13 @@
 package tests;
 
 import base.BaseSettings;
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.BasePage;
+
+import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class checkEventsCalendarTest extends BaseSettings {
     @Test
@@ -12,11 +16,41 @@ public class checkEventsCalendarTest extends BaseSettings {
         new BasePage()
                 .openURL()
                 .clickButtonOk()
-                .clickBropdownTraining()
+                .clickBropdownTraining();
+        sleep(3000);
+        new BasePage()
                 .clickEventsCalendar();
+        sleep(3000);
+        new BasePage()
+                .clickButtonOk1();
+sleep(3000);
+        long lastHeight = (long) executeJavaScript("return document.body.scrollHeight;");
+        long newHeight;
 
+        while (true) {
+            // Скроллим в самый низ страницы
+            executeJavaScript("window.scrollTo(0, document.body.scrollHeight);");
+
+            // Ожидание загрузки контента (можно настроить под ваш сайт)
+            sleep(2000);
+
+            // Получаем новую высоту страницы
+            newHeight = (long) executeJavaScript("return document.body.scrollHeight;");
+
+            // Если высота страницы не увеличилась, значит конец достигнут
+            if (newHeight == lastHeight) {
+                break;
+            }
+
+            lastHeight = newHeight; // Обновляем значение последней высоты
+        }
+
+        System.out.println("Достигнут конец страницы.");
     }
 }
+
+
+
 
 
 /*

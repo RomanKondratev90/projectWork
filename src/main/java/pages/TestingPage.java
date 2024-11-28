@@ -4,6 +4,7 @@ import com.codeborne.selenide.*;
 import lombok.extern.slf4j.Slf4j;
 import utils.ElementActions;
 
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.*;
 
 @Slf4j //Аннотацию для логирования
@@ -27,7 +28,7 @@ public class TestingPage {
 
     public TestingPage clickShowMoreButton() {
         Selenide.executeJavaScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", SHOW_MORE_BUTTON);
-        Selenide.executeJavaScript("arguments[0].click();", SHOW_MORE_BUTTON);
+        SHOW_MORE_BUTTON.should(appear);
         elementActions.click(SHOW_MORE_BUTTON, "Кнопка 'Показать еще' ");
         return this;
     }

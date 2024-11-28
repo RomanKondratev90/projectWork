@@ -18,7 +18,7 @@ public class checkCourseCatalogTest extends BaseSettings {
                 .clickBropdownTrainingTesting();
         new TestingPage()
                 .clickShowMoreButton()
-                .displayTotalCoursesCount();
+                .checkTotalCoursesCount(11);
     }
 
     @Test
@@ -33,16 +33,4 @@ public class checkCourseCatalogTest extends BaseSettings {
                 .clickJavaQaEngineerProfessional()
                 .checkCourseData();
     }
-
-
-
-
 }
-/*
-1. Посчитать кол-во курсов в разделе тестирование и вывести результат
-2. Перейти в карточку курса и проверить : Название,  Описание,  Длительность обучения, Формат
-3. Валидация дат мероприятий. Прогрузить все карточки, получить дату актуальную или больше актуальной)
-Проверить, что отображаются даты актуальные, либо больше актуальной
-4. Открыть карточки  предстоящих мероприятий - Открытые вебинары
-Выбрать открытый вебинар в выпадающем списке и проверить, что все карточки имеют значение - открытый вебинар
-*/

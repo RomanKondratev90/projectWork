@@ -14,7 +14,7 @@ public abstract class BaseSettings {
     @BeforeAll  //аннотация (запуск настроек (метода) один раз перед всеми тестами)
     public static void init() {
         factory = new WebDriverFactory();
-        Configuration.timeout = 60000; //установка неявного ожидания = 60000 (60 сек.) (время ожидания элемента)
+        Configuration.timeout = 10000; //установка неявного ожидания = 10000 (10 сек.) (время ожидания элемента)
         DelayFactory.setActionDelay(300); //задержка перед действием = 300 мс (рекомендованное значение)
     }
 

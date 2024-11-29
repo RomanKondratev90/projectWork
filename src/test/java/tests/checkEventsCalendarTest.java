@@ -22,6 +22,7 @@ public class checkEventsCalendarTest extends BaseSettings {
                 .clickBropdownTraining()
                 .clickEventsCalendar();
         new EventsCalendarPage()
+                .clickButtonOk()
                 .scrollToEndOfPage()
                 .checkActualDates();
     }

@@ -5,7 +5,6 @@ import config.AccessesConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.aeonbits.owner.ConfigFactory;
 import utils.ElementActions;
-import com.codeborne.selenide.Condition;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -21,8 +20,6 @@ public class BasePage {
     private static final SelenideElement EVENTS_CALENDAR =$x("//a[normalize-space(text())='Календарь мероприятий']");
     //Кнопка - ОК
     private static final SelenideElement BUTTON_OK =$x("//div[normalize-space(text())='OK']");
-
-    private static final SelenideElement BUTTON_OK1 =$("button.js-cookie-accept");
 
     public BasePage clickBropdownTraining() {
         elementActions.click(DROPDOWN_TRAINING, "Выпадающий список 'Обучение'");
@@ -40,11 +37,6 @@ public class BasePage {
         elementActions.click(BUTTON_OK, "Кнопка 'ОК'");
         return this;
     }
-    public BasePage clickButtonOk1() {
-        elementActions.doubleClick(BUTTON_OK1, "Кнопка 'ОК'");
-        return this;
-    }
-    //Метод открытия URL
     public BasePage openURL() {
         AccessesConfig accessesConfig = ConfigFactory.create(AccessesConfig.class);
         accessesConfig.URL();

@@ -29,7 +29,7 @@ public class ElementActions {
         return this;
     }
 
-    //setValue - Вставка текста
+    //setValue - вставка текста
     public ElementActions setValue(SelenideElement locator, String value, String description) {
         //Задержка перед добавлением текста, получаем из Base Settings
         Selenide.sleep(DelayFactory.getActionDelay());
@@ -38,7 +38,7 @@ public class ElementActions {
         return this;
     }
 
-    //shouldHave - Используется для проверки, что элемент имеет конкретное состояние или текст в момент выполнения проверки.
+    //shouldHave - проверка, что элемент имеет конкретное состояние или текст в момент выполнения проверки.
     public ElementActions shouldHave(SelenideElement locator, String value, String description) {
         //Задержка перед сравнением, получаем из Base Settings
         Selenide.sleep(DelayFactory.getActionDelay());

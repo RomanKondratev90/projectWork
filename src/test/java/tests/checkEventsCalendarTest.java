@@ -26,17 +26,21 @@ public class checkEventsCalendarTest extends BaseSettings {
                 .scrollToEndOfPage()
                 .checkActualDates();
     }
+
+    @Test
+    @DisplayName("Проверка мероприятий с типом 'Открытый вебинар'")
+    public void checkOpenWebinarEvents() {
+        new BasePage()
+                .openURL()
+                .clickButtonOk()
+                .clickBropdownTraining()
+                .clickEventsCalendar();
+        new EventsCalendarPage()
+                .clickButtonOk()
+                .clickEventsDropdownNearestEvents()
+                .clickEventsDropdownNearestEventsOpenWebinars();
+        new EventsCalendarPage()
+                //.scrollToEndOfPage()
+                .checkOpenWebinar();
+    }
 }
-
-
-
-
-
-
-
-/*
-3. Валидация дат мероприятий. Прогрузить все карточки, получить дату актуальную или больше актуальной)
-Проверить, что отображаются даты актуальные, либо больше актуальной
-4. Открыть карточки  предстоящих мероприятий - Открытые вебинары
-Выбрать открытый вебинар в выпадающем списке и проверить, что все карточки имеют значение - открытый вебинар
-*/

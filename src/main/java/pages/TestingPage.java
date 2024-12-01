@@ -50,5 +50,4 @@ public class TestingPage {
         elementActions.shouldHave(TRAINING_FORMAT,"Онлайн", "Формат обучения 'Онлайн'");
     return this;
     }
-
 }

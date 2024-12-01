@@ -4,6 +4,7 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.WebElement;
 import utils.ElementActions;
 
 import java.time.LocalDate;
@@ -21,8 +22,14 @@ public class EventsCalendarPage {
 
     //Кнопка - ОК
     private static final SelenideElement BUTTON_OK =$x("//button[@class='js-cookie-accept cookies__button']");
-    //Даты мероприятий
+    //Карточки - Даты мероприятий
     private static final ElementsCollection EVENT_DATE = $$("div.dod_new-event__time");
+    //Выпадающий список - Ближайшие мероприятия
+    private static final SelenideElement EVENTS_DROPDOWN_NEAREST_EVENTS =$x("//span[@class='dod_new-events-dropdown__input-selected']");
+    //Выпадающий список - Ближайшие мероприятия - элемент - Открытые вебинары
+    private static final SelenideElement EVENTS_DROPDOWN_NEAREST_EVENTS_OPEN_WEBINARS =$x("//a[normalize-space(text())='Открытый вебинар']");
+    //Карточки - Открытый вебинар
+    private static final ElementsCollection OPEN_WEBINAR = $$("div.dod_new-type__text");
 
     public EventsCalendarPage clickButtonOk() {
         elementActions.doubleClick(BUTTON_OK, "Кнопка 'ОК'");
@@ -75,6 +82,25 @@ public class EventsCalendarPage {
         }
         return this;
     }
+    public EventsCalendarPage clickEventsDropdownNearestEvents() {
+        elementActions.click(EVENTS_DROPDOWN_NEAREST_EVENTS, "Выпадающий список 'Ближайшие мероприятия'");
+        return this;
+    }
+    public EventsCalendarPage clickEventsDropdownNearestEventsOpenWebinars() {
+        elementActions.doubleClick(EVENTS_DROPDOWN_NEAREST_EVENTS_OPEN_WEBINARS, "Элемен выпадающего списка 'Открытый вебинар'");
+        return this;
+    }
+    public EventsCalendarPage checkOpenWebinar(){
+        long count = 0;
+        for (WebElement element : OPEN_WEBINAR) {
+            if (element.getText().contains("Открытый вебинар")) {
+                count++;
+            }
+        }
+        System.out.println("Количество карточек с 'Открытый вебинар': " + count);
+        return this;
+    }
 }
+
 
 

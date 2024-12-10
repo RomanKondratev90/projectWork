@@ -3,9 +3,8 @@ package pages;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.WebElement;
-import utils.ElementActions;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,44 +12,41 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
 
-@Slf4j //Аннотацию для логирования
+
 public class EventsCalendarPage {
-    private ElementActions elementActions = new ElementActions();
+    private static final Logger log = LogManager.getLogger(TestingPage.class);
 
     //Кнопка - ОК
-    private static final SelenideElement BUTTON_OK =$x("//button[@class='js-cookie-accept cookies__button']");
+    private final SelenideElement buttonOk = $$("button.js-cookie-accept.cookies__button").filter(text("ОК")).first();
     //Карточки - Даты мероприятий
-    private static final ElementsCollection EVENT_DATE = $$("div.dod_new-event__time");
+    private final ElementsCollection eventDates = $$("div.dod_new-event__time");
     //Выпадающий список - Ближайшие мероприятия
-    private static final SelenideElement EVENTS_DROPDOWN_NEAREST_EVENTS =$x("//span[@class='dod_new-events-dropdown__input-selected']");
+    private final SelenideElement eventsDropdownNearestEvents = $$("span.dod_new-events-dropdown__input-selected").filter(visible).first();;
     //Выпадающий список - Ближайшие мероприятия - элемент - Открытые вебинары
-    private static final SelenideElement EVENTS_DROPDOWN_NEAREST_EVENTS_OPEN_WEBINARS =$x("//a[normalize-space(text())='Открытый вебинар']");
+    private final SelenideElement eventsDropdownNearestEventsOpenWebinars = $$("a").filter(text("Открытый вебинар")).first();
     //Карточки - Открытый вебинар
-    private static final ElementsCollection OPEN_WEBINAR = $$("div.dod_new-type__text");
+    private final ElementsCollection openWebinarCards = $$("div.dod_new-type__text");
 
     public EventsCalendarPage clickButtonOk() {
-        elementActions.doubleClick(BUTTON_OK, "Кнопка 'ОК'");
+        buttonOk.shouldBe(visible).click();
+        log.info("Клик по кнопке - OK");
         return this;
     }
+
+    //Прокрутка страницы до конца
     public EventsCalendarPage scrollToEndOfPage() {
-        long lastHeight = (long) executeJavaScript("return document.body.scrollHeight;");
-        long newHeight;
-        while (true) {
-            executeJavaScript("window.scrollTo(0, document.body.scrollHeight);");
-            sleep(2000);
-            newHeight = (long) executeJavaScript("return document.body.scrollHeight;");
-            if (newHeight == lastHeight) {
-                break;
-            }
-            lastHeight = newHeight;
-        }
+        $("footer").scrollTo().shouldBe(visible);
+        log.info("Прокрутка страницы до конца завершена");
         return this;
     }
+
+    //Проверка актуальных дат мероприятий
     public EventsCalendarPage checkActualDates() {
-        EVENT_DATE.shouldHave(CollectionCondition.sizeGreaterThan(0));
+        eventDates.shouldHave(CollectionCondition.sizeGreaterThan(0));
         //формат для парсинга даты и времени
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.forLanguageTag("ru"));
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -58,7 +54,7 @@ public class EventsCalendarPage {
         LocalDateTime now = LocalDateTime.now();
         int currentYear = now.getYear();
         //перебор
-        for (SelenideElement eventElement : EVENT_DATE) {
+        for (SelenideElement eventElement : eventDates) {
             try { //поиск всех дочерних элементов
                 ElementsCollection dateAndTimeItems = eventElement.$$("span.dod_new-event__date-text");
                 if (dateAndTimeItems.size() >= 2) {
@@ -82,22 +78,23 @@ public class EventsCalendarPage {
         }
         return this;
     }
+
     public EventsCalendarPage clickEventsDropdownNearestEvents() {
-        elementActions.click(EVENTS_DROPDOWN_NEAREST_EVENTS, "Выпадающий список 'Ближайшие мероприятия'");
+        eventsDropdownNearestEvents.shouldBe(visible).click();
+        log.info("Клик по элементу выпадающнго списка - Ближайшие мероприятия");
         return this;
     }
+
+    //Клик по элементу выпадающего списка "Открытые вебинары"
     public EventsCalendarPage clickEventsDropdownNearestEventsOpenWebinars() {
-        elementActions.doubleClick(EVENTS_DROPDOWN_NEAREST_EVENTS_OPEN_WEBINARS, "Элемен выпадающего списка 'Открытый вебинар'");
+        eventsDropdownNearestEventsOpenWebinars.shouldBe(visible).doubleClick();
+        log.info("Клик по элементу выпадающего списка 'Открытый вебинар'");
         return this;
     }
-    public EventsCalendarPage checkOpenWebinar(){
-        long count = 0;
-        for (WebElement element : OPEN_WEBINAR) {
-            if (element.getText().contains("Открытый вебинар")) {
-                count++;
-            }
-        }
-        System.out.println("Количество карточек с 'Открытый вебинар': " + count);
+
+    //Проверка наличия карточек "Открытый вебинар"
+    public EventsCalendarPage checkOpenWebinar() {
+        System.out.printf("Количество карточек с 'Открытый вебинар': %d", openWebinarCards.filter(text("Открытый вебинар")).size());
         return this;
     }
 }

@@ -2,52 +2,56 @@ package pages;
 
 import com.codeborne.selenide.*;
 import lombok.extern.slf4j.Slf4j;
-import utils.ElementActions;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import static com.codeborne.selenide.Condition.appear;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-@Slf4j //Аннотацию для логирования
 public class TestingPage {
-    private ElementActions elementActions = new ElementActions();
+    private static final Logger log = LogManager.getLogger(TestingPage.class);
 
     //Количество курсов
-    private static final ElementsCollection TOTAL_COURSES_COUNT = $$x("//section[@class='sc-o4bnil-0 riKpM']//a");
+    private final ElementsCollection totalCoursesCount = $$("section.sc-o4bnil-0.riKpM a");
     //Кнопка - Показать еще
-    private static final SelenideElement SHOW_MORE_BUTTON = $x("//button[contains(normalize-space(text()), 'Показать еще')]");
+    private final SelenideElement showMoreButton = $$("button").filter(text("Показать еще")).first();
     //Курс - Java QA Engineer. Professional
-    private static final SelenideElement JAVA_QA_ENGINEER_PROFESSIONAL = $x("//div[normalize-space(text())='Java QA Engineer. Professional']");
-    //Поле - Название
-    private static final SelenideElement COURSE_NAME = $x("//h1[normalize-space(text())='Java QA Engineer. Professional']");
+    private final SelenideElement javaQaEngineerProfessional = $$("div.sc-hrqzy3-1.jEGzDf").filter(text("Java QA Engineer. Professional")).first();
+    //Поле - Название курса
+    private final SelenideElement courseName = $$("h1").filter(text("Java QA Engineer. Professional")).first();
     //Поле - Описание
-    private static final SelenideElement COURSE_DESCRIPTION = $x("//p[normalize-space(text())='Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности']");
+    private final SelenideElement courseDescription = $$("p").filter(text("Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности")).first();
     //Поле - Длительность
-    private static final SelenideElement TRAINING_DURATION = $x("//p[normalize-space(text())='4 месяца']");
+    private final SelenideElement trainingDuration = $$("p").filter(text("4 месяца")).first();
     //Поле - Формат
-    private static final SelenideElement TRAINING_FORMAT = $x("//p[normalize-space(text())='Онлайн']");
+    private final SelenideElement trainingFormat = $$("p").filter(text("Онлайн")).first();
 
     public TestingPage clickShowMoreButton() {
-        Selenide.executeJavaScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", SHOW_MORE_BUTTON);
-        SHOW_MORE_BUTTON.should(appear);
-        elementActions.click(SHOW_MORE_BUTTON, "Кнопка 'Показать еще' ");
+        Selenide.executeJavaScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", showMoreButton);
+        showMoreButton.should(appear).click();
+        log.info("скролл и клик по кнопке - 'Показать еще'");
         return this;
     }
     public TestingPage checkTotalCoursesCount(int expectedCount) {
-        String actualCoursesCount = String.valueOf(TOTAL_COURSES_COUNT.size());
-        TOTAL_COURSES_COUNT.shouldHave(CollectionCondition.size(expectedCount));
-        log.info("Проверка, что отображается количество курсов = "+expectedCount);
-        System.out.println("Фактическое количество курсов = " + actualCoursesCount);
+        totalCoursesCount.shouldHave(CollectionCondition.size(expectedCount));
+        log.info("Проверка, что отображается количество курсов = {}", expectedCount);
+        System.out.println("Фактическое количество курсов = " + totalCoursesCount.size());
         return this;
     }
     public TestingPage clickJavaQaEngineerProfessional() {
-        elementActions.doubleClick(JAVA_QA_ENGINEER_PROFESSIONAL, "Курс 'Java QA Engineer. Professional'");
+        javaQaEngineerProfessional.doubleClick();
+        log.info("Клик по карточке курса - Java QA Engineer. Professional");
         return this;
     }
     public TestingPage checkCourseData() {
-        elementActions.shouldHave(COURSE_NAME,"Java QA Engineer. Professional", "Название курса 'Java QA Engineer. Professional'");
-        elementActions.shouldHave(COURSE_DESCRIPTION,"Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности", "Описание курса 'Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности'");
-        elementActions.shouldHave(TRAINING_DURATION,"4 месяца", "Длительность обучения '4 месяца'");
-        elementActions.shouldHave(TRAINING_FORMAT,"Онлайн", "Формат обучения 'Онлайн'");
-    return this;
+        courseName.shouldHave(text("Java QA Engineer. Professional"));
+        log.info("Проверка отображения названия курса  - Java QA Engineer. Professional");
+        courseDescription.shouldHave(text("Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности"));
+        log.info("Проверка отображения описания курса  - Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности");
+        trainingDuration.shouldHave(text("4 месяца"));
+        log.info("Проверка отображения длительности обучения - 4 месяца");
+        trainingFormat.shouldHave(text("Онлайн"));
+        log.info("Проверка отображения формата обучения - Онлайн");
+        return this;
     }
 }

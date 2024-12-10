@@ -1,47 +1,50 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import config.AccessesConfig;
-import lombok.extern.slf4j.Slf4j;
-import org.aeonbits.owner.ConfigFactory;
-import utils.ElementActions;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$x;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Slf4j //Аннотацию для логирования
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
+
 public class BasePage {
-    private ElementActions elementActions = new ElementActions();
+    private static final Logger log = LogManager.getLogger(TestingPage.class);
 
     //Вкладка - Обучение
-    private static final SelenideElement DROPDOWN_TRAINING =$x("//span[normalize-space(text())='Обучение']");
+    private final SelenideElement dropdownTraining = $$("span").filter(text("Обучение")).first();
     //Вкладка - Тестирование
-    private static final SelenideElement DROPDOWN_TRAINING_TESTING =$x("//a[normalize-space(text())='Тестирование']");
+    private final SelenideElement dropdownTrainingTesting = $$("a").filter(text("Тестирование")).first();
     //Вкладка - Календрарь мероприятий
-    private static final SelenideElement EVENTS_CALENDAR =$x("//a[normalize-space(text())='Календарь мероприятий']");
+    private final SelenideElement eventsCalendar = $$("a").filter(text("Календарь мероприятий")).first();
     //Кнопка - ОК
-    private static final SelenideElement BUTTON_OK =$x("//div[normalize-space(text())='OK']");
+    private final SelenideElement buttonOk = $$("div.sc-9a4spb-2").filter(text("OK")).first();
 
-    public BasePage clickBropdownTraining() {
-        elementActions.click(DROPDOWN_TRAINING, "Выпадающий список 'Обучение'");
+    public BasePage clickDropdownTraining() {
+        dropdownTraining.shouldBe(visible).click();
+        log.info("Клик по выпадающему списоку - Обучение ");
         return this;
     }
-    public BasePage clickBropdownTrainingTesting() {
-        elementActions.click(DROPDOWN_TRAINING_TESTING, "Элемент выпадающего списка 'Тестирование'");
+    public BasePage clickDropdownTrainingTesting() {
+        dropdownTrainingTesting.shouldBe(visible).click();
+        log.info("Клик по элементу выпадающего списока - Тестирование");
         return this;
     }
     public BasePage clickEventsCalendar() {
-        elementActions.doubleClick(EVENTS_CALENDAR, "Элемент выпадающего списка 'Календарь мероприятий'");
+        eventsCalendar.shouldBe(visible).doubleClick();
+        log.info("Клик по элементу выпадающего списока - Календарь мероприятий");
         return this;
     }
     public BasePage clickButtonOk() {
-        elementActions.click(BUTTON_OK, "Кнопка 'ОК'");
+        buttonOk.shouldBe(visible).doubleClick();
+        log.info("Клик по кнопке - ОК");
         return this;
     }
     public BasePage openURL() {
-        AccessesConfig accessesConfig = ConfigFactory.create(AccessesConfig.class);
-        accessesConfig.URL();
-        open(accessesConfig.URL());
+        String baseUrl = System.getProperty("base.url", "https://otus.ru");
+        open(baseUrl);
         log.info("Переход по URL");
         return this;
     }
 }
+

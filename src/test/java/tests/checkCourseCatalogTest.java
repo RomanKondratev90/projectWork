@@ -1,7 +1,6 @@
 package tests;
 
 import base.BaseSettings;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.BasePage;
@@ -14,21 +13,20 @@ public class checkCourseCatalogTest extends BaseSettings {
         new BasePage()
                 .openURL()
                 .clickButtonOk()
-                .clickBropdownTraining()
-                .clickBropdownTrainingTesting();
+                .clickDropdownTraining()
+                .clickDropdownTrainingTesting();
         new TestingPage()
                 .clickShowMoreButton()
                 .checkTotalCoursesCount(11);
     }
-
     @Test
     @DisplayName("Проверка полей в курсе: Java QA Engineer. Professional")
     public void checkCourseData() {
         new BasePage()
                 .openURL()
                 .clickButtonOk()
-                .clickBropdownTraining()
-                .clickBropdownTrainingTesting();
+                .clickDropdownTraining()
+                .clickDropdownTrainingTesting();
         new TestingPage()
                 .clickJavaQaEngineerProfessional()
                 .checkCourseData();

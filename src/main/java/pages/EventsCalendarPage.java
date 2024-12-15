@@ -17,7 +17,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 
-public class EventsCalendarPage {
+public class EventsCalendarPage extends BasePage {
     private static final Logger log = LogManager.getLogger(TestingPage.class);
 
     //Кнопка - ОК

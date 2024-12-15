@@ -1,18 +1,19 @@
 package tests;
 
-import base.BaseSettings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pages.BasePage;
+import org.junit.jupiter.api.extension.ExtendWith;
 import pages.EventsCalendarPage;
+import pages.MainPage;
 
-public class checkEventsCalendarTest extends BaseSettings {
+@ExtendWith(BaseSettings.class)
+public class CheckEventsCalendarTest {
 
     @Test
     @DisplayName("Проверка дат мероприятий")
     public void checkEventDates() {
-        new BasePage()
-                .openURL()
+        new MainPage()
+                .openMainPage()
                 .clickButtonOk()
                 .clickDropdownTraining()
                 .clickEventsCalendar();
@@ -25,8 +26,8 @@ public class checkEventsCalendarTest extends BaseSettings {
     @Test
     @DisplayName("Проверка мероприятий с типом 'Открытый вебинар'")
     public void checkOpenWebinarEvents() {
-        new BasePage()
-                .openURL()
+        new MainPage()
+                .openMainPage()
                 .clickButtonOk()
                 .clickDropdownTraining()
                 .clickEventsCalendar();

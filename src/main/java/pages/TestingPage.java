@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.*;
+import enums.Course;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class TestingPage {
+public class TestingPage extends BasePage {
     private static final Logger log = LogManager.getLogger(TestingPage.class);
 
     //Количество курсов
@@ -43,15 +44,19 @@ public class TestingPage {
         log.info("Клик по карточке курса - Java QA Engineer. Professional");
         return this;
     }
-    public TestingPage checkCourseData() {
-        courseName.shouldHave(text("Java QA Engineer. Professional"));
-        log.info("Проверка отображения названия курса  - Java QA Engineer. Professional");
-        courseDescription.shouldHave(text("Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности"));
-        log.info("Проверка отображения описания курса  - Курс по автоматизированному тестированию на Java: продвинутые инструменты, новые карьерные возможности");
-        trainingDuration.shouldHave(text("4 месяца"));
-        log.info("Проверка отображения длительности обучения - 4 месяца");
-        trainingFormat.shouldHave(text("Онлайн"));
-        log.info("Проверка отображения формата обучения - Онлайн");
+    public TestingPage checkCourseData(Course course) {
+        courseName.shouldHave(text(course.getCourseName()));
+        log.info("Проверка отображения названия курса  - {}", course.getCourseName());
+
+        courseDescription.shouldHave(text(course.getCourseDescription()));
+        log.info("Проверка отображения описания курса  - {}", course.getCourseDescription());
+
+        trainingDuration.shouldHave(text(course.getTrainingDuration()));
+        log.info("Проверка отображения длительности обучения - {}", course.getTrainingDuration());
+
+        trainingFormat.shouldHave(text(course.getTrainingFormat()));
+        log.info("Проверка отображения формата обучения - {}", course.getTrainingFormat());
+
         return this;
     }
 }

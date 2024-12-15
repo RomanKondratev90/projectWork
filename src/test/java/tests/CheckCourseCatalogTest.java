@@ -1,17 +1,20 @@
 package tests;
 
-import base.BaseSettings;
+import enums.Course;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import pages.BasePage;
+import pages.MainPage;
 import pages.TestingPage;
 
-public class checkCourseCatalogTest extends BaseSettings {
+@ExtendWith(BaseSettings.class)
+public class CheckCourseCatalogTest {
     @Test
     @DisplayName("Проверка количества курсов")
     public void checkCourseCount() {
-        new BasePage()
-                .openURL()
+        new MainPage()
+                .openMainPage()
                 .clickButtonOk()
                 .clickDropdownTraining()
                 .clickDropdownTrainingTesting();
@@ -22,13 +25,13 @@ public class checkCourseCatalogTest extends BaseSettings {
     @Test
     @DisplayName("Проверка полей в курсе: Java QA Engineer. Professional")
     public void checkCourseData() {
-        new BasePage()
-                .openURL()
+        new MainPage()
+                .openMainPage()
                 .clickButtonOk()
                 .clickDropdownTraining()
                 .clickDropdownTrainingTesting();
         new TestingPage()
                 .clickJavaQaEngineerProfessional()
-                .checkCourseData();
+                .checkCourseData(Course.JAVA_QA_ENGINEER_PROFESSIONAL);
     }
 }
